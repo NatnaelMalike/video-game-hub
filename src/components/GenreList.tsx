@@ -1,5 +1,6 @@
 import {
     Button,
+    Heading,
     HStack,
     Image,
     List,
@@ -17,20 +18,25 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
     const { data, loading } = useGenre();
     if (loading) return <Spinner />;
     return (
+        <>
+        <Heading fontSize={'2xl'} marginBottom={5}>Genres</Heading>
         <List>
             {data.map((genre) => (
                 <ListItem key={genre.id} paddingY="5px">
-                    <HStack>
+                    <HStack spacing={3}>
                         <Image
                             boxSize="40px"
                             src={getCroppedImgUrl(genre.image_background)}
+                            objectFit="cover"
                             borderRadius={10}
                         />
                         <Button
+                            whiteSpace="normal"
+                            textAlign="left"
                             fontWeight={
                                 genre.id === selectedGenre?.id
-                                    ? "bold"
-                                    : "normal"
+                                ? "bold"
+                                : "normal"
                             }
                             variant="link"
                             onClick={() => {
@@ -43,6 +49,7 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
                 </ListItem>
             ))}
         </List>
+            </>
     );
 };
 
