@@ -16,17 +16,20 @@ export interface Game {
 const apiClient = new ApiClient<Game>("/games");
 
 const useGames = (gameQuery: GameQuery) =>
-    useQuery<FetchedResponse<Game>>({
+    useInfiniteQuery<FetchedResponse<Game>>({
         queryKey: ["games", gameQuery],
-        queryFn: () =>
+        queryFn: ({pageParam}) =>
             apiClient.getAll({
                 params: {
                     genres: gameQuery.genre?.id,
                     parent_platforms: gameQuery.platform?.id,
                     ordering: gameQuery.sortOrder,
                     search: gameQuery.searchText,
+                    page: pageParam
                 },
             }),
+            initialPageParam: 1,
+            getNextPageParam: (lastPage, allPages) => lastPage.next ? allPages.length + 1: undefined
     });
 
 export default useGames;

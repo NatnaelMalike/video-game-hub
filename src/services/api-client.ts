@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 export interface FetchedResponse<T> {
     count: number;
+    next ?: string | null;
     results: T[];
 }
 const axoisInstance =  axios.create({
