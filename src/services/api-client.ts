@@ -11,7 +11,7 @@ const axoisInstance =  axios.create({
 })
 class ApiClient<T>{
     constructor(public endpoint:string){}
-    getAll(config?: AxiosRequestConfig){
+    getAll= (config: AxiosRequestConfig)=>{
         return axoisInstance.get<FetchedResponse<T>>(this.endpoint, config).then(res => res.data)
     }
 }
