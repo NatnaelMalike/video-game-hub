@@ -10,12 +10,12 @@ export interface Platform {
 
 const apiClient = new ApiClient<Platform>('/platforms/lists/parents')
 
-const usePlatform = () => 
+const usePlatforms = () => 
     useQuery({
         queryKey: ["platform"],
         queryFn:  apiClient.getAll,
         staleTime: 1 * 60 * 60 * 1000,
-        initialData: {count: platforms.length, results: platforms}
+        initialData: platforms
     })
 
-export default usePlatform;
+export default usePlatforms;
