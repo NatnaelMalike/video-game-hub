@@ -7,15 +7,14 @@ import {
     ListItem,
     Spinner,
 } from "@chakra-ui/react";
-import useGenres, { Genre } from "../hooks/useGenres";
+import useGenres from "../hooks/useGenres";
 import getCroppedImgUrl from "../services/image-url";
+import useGameQueryStore from "../store";
 
-interface Props {
-    onSelectGenre: (genre: Genre) => void;
-    selectedGenreId?: number;
-}
-const GenreList = ({ onSelectGenre, selectedGenreId }: Props) => {
+const GenreList = () => {
     const { data, isLoading } = useGenres();
+    const selectedGenreId = useGameQueryStore((s) => s.gameQuery.genreId);
+    const setSelectGenreId = useGameQueryStore((s) => s.setSelectGenreId);
     if (isLoading) return <Spinner />;
     return (
         <>
@@ -42,7 +41,7 @@ const GenreList = ({ onSelectGenre, selectedGenreId }: Props) => {
                                 }
                                 variant="link"
                                 onClick={() => {
-                                    onSelectGenre(genre);
+                                    setSelectGenreId(genre.id);
                                 }}
                                 fontSize="lg">
                                 {genre.name}
