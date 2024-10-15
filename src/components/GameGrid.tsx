@@ -33,17 +33,18 @@ const GameGrid = () => {
             loader={<Spinner />}>
                 <SimpleGrid
                     columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
-                    spacing={6}>
+                    spacing={6}
+                    paddingTop={4}>
                     {isLoading
                         ? skeletons.map((skeleton) => (
-                              <GameCardContainer key={skeleton}>
+                              <GameCardContainer key={skeleton} slug={""}>
                                   <GameCardSkeleton />
                               </GameCardContainer>
                           ))
                         : data?.pages.map((page, i) => (
                               <React.Fragment key={i}>
                                   {page.results.map((game) => (
-                                      <GameCardContainer key={game.id}>
+                                      <GameCardContainer key={game.id} slug={game.slug}>
                                           <GameCard game={game} />
                                       </GameCardContainer>
                                   ))}
