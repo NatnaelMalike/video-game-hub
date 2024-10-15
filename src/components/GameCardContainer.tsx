@@ -4,9 +4,8 @@ import { ReactNode } from "react";
 
 interface Props {
     children: ReactNode;
-    slug: string;
 }
-const GameCardContainer = ({ children, slug }: Props) => {
+const GameCardContainer = ({ children }: Props) => {
     return (
         <Box
             borderRadius={10}

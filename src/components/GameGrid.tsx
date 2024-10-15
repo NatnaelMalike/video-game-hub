@@ -6,16 +6,8 @@ import GameCardSkeleton from "./GameCardSkeleton";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-
-
 const GameGrid = () => {
-    const {
-        data,
-        isLoading,
-        error,
-        hasNextPage,
-        fetchNextPage,
-    } = useGames();
+    const { data, isLoading, error, hasNextPage, fetchNextPage } = useGames();
     const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     if (error) return <Text>{error.message}</Text>;
     const fetchedGamesCount =
@@ -26,25 +18,25 @@ const GameGrid = () => {
 
     return (
         <Box padding={2}>
-        <InfiniteScroll
-            dataLength={fetchedGamesCount}
-            next={fetchNextPage}
-            hasMore={hasNextPage}
-            loader={<Spinner />}>
+            <InfiniteScroll
+                dataLength={fetchedGamesCount}
+                next={fetchNextPage}
+                hasMore={hasNextPage}
+                loader={<Spinner />}>
                 <SimpleGrid
                     columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
                     spacing={6}
                     paddingTop={4}>
                     {isLoading
                         ? skeletons.map((skeleton) => (
-                              <GameCardContainer key={skeleton} slug={""}>
+                              <GameCardContainer key={skeleton}>
                                   <GameCardSkeleton />
                               </GameCardContainer>
                           ))
                         : data?.pages.map((page, i) => (
                               <React.Fragment key={i}>
                                   {page.results.map((game) => (
-                                      <GameCardContainer key={game.id} slug={game.slug}>
+                                      <GameCardContainer key={game.id}>
                                           <GameCard game={game} />
                                       </GameCardContainer>
                                   ))}
@@ -57,8 +49,8 @@ const GameGrid = () => {
                         {isFetchingNextPage ? "Loading more..." : "Load More"}
                     </Button>
                 )} */}
-        </InfiniteScroll>
-            </Box>
+            </InfiniteScroll>
+        </Box>
     );
 };
 
