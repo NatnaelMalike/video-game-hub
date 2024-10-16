@@ -6,7 +6,7 @@ const apiClient = new ApiClient<Game>("/games");
 
 const useGame = (slug: string) =>
     useQuery({
-        queryKey: ["description"],
+        queryKey: ['games', slug],
         queryFn: () => apiClient.get(slug),
     });
 
