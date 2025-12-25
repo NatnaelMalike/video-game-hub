@@ -8,6 +8,7 @@ import {
   ListItem,
   Spinner,
   VStack,
+  useColorMode,
 } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 import getCroppedImgUrl from "../services/image-url";
@@ -17,11 +18,13 @@ const GenreList = () => {
   const { data, isLoading } = useGenres();
   const selectedGenreId = useGameQueryStore((s) => s.gameQuery.genreId);
   const setSelectGenreId = useGameQueryStore((s) => s.setSelectGenreId);
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
 
   if (isLoading) {
     return (
       <VStack py={10}>
-        <Spinner color="gaming.accent" size="lg" />
+        <Spinner color={isDark ? "gaming.accent" : "light.accent"} size="lg" />
       </VStack>
     );
   }
@@ -38,7 +41,7 @@ const GenreList = () => {
           width: "4px",
         },
         "&::-webkit-scrollbar-thumb": {
-          background: "#2a2a3a",
+          background: isDark ? "#2a2a3a" : "#cbd5e0",
           borderRadius: "4px",
         },
       }}
@@ -47,7 +50,7 @@ const GenreList = () => {
         fontSize="lg"
         fontFamily="heading"
         mb={4}
-        color="gray.300"
+        color={isDark ? "gray.300" : "gray.700"}
         letterSpacing="wider"
         textTransform="uppercase"
       >
@@ -67,13 +70,31 @@ const GenreList = () => {
                 py={2}
                 px={2}
                 borderRadius="lg"
-                bg={isSelected ? "whiteAlpha.100" : "transparent"}
+                bg={
+                  isSelected
+                    ? isDark
+                      ? "whiteAlpha.100"
+                      : "blackAlpha.50"
+                    : "transparent"
+                }
                 borderLeft="3px solid"
-                borderColor={isSelected ? "neon.cyan" : "transparent"}
+                borderColor={
+                  isSelected
+                    ? isDark
+                      ? "neon.cyan"
+                      : "brand.500"
+                    : "transparent"
+                }
                 onClick={() => setSelectGenreId(genre.id)}
                 _hover={{
-                  bg: "whiteAlpha.100",
-                  borderColor: isSelected ? "neon.cyan" : "gaming.accent",
+                  bg: isDark ? "whiteAlpha.100" : "blackAlpha.50",
+                  borderColor: isSelected
+                    ? isDark
+                      ? "neon.cyan"
+                      : "brand.500"
+                    : isDark
+                    ? "gaming.accent"
+                    : "light.accent",
                 }}
                 transition="all 0.2s"
               >
@@ -83,12 +104,28 @@ const GenreList = () => {
                   objectFit="cover"
                   borderRadius="lg"
                   border="1px solid"
-                  borderColor={isSelected ? "neon.cyan" : "gaming.border"}
+                  borderColor={
+                    isSelected
+                      ? isDark
+                        ? "neon.cyan"
+                        : "brand.500"
+                      : isDark
+                      ? "gaming.border"
+                      : "light.border"
+                  }
                 />
                 <Box
                   fontSize="sm"
                   fontWeight={isSelected ? "600" : "400"}
-                  color={isSelected ? "white" : "gray.300"}
+                  color={
+                    isSelected
+                      ? isDark
+                        ? "white"
+                        : "gray.900"
+                      : isDark
+                      ? "gray.300"
+                      : "gray.700"
+                  }
                   textAlign="left"
                   noOfLines={1}
                 >

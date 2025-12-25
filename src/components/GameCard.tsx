@@ -10,6 +10,7 @@ import {
   Badge,
   Icon,
   Flex,
+  useColorMode,
 } from "@chakra-ui/react";
 import Game from "../entities/Game";
 import PlatformIconList from "./PlatformIconList";
@@ -24,6 +25,9 @@ interface Props {
 }
 
 const GameCard = ({ game }: Props) => {
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
+
   const formatDate = (dateStr: string) => {
     if (!dateStr) return null;
     const date = new Date(dateStr);
@@ -40,16 +44,19 @@ const GameCard = ({ game }: Props) => {
       style={{ display: "block", height: "100%" }}
     >
       <Card
-        bg="gaming.card"
+        bg={isDark ? "gaming.card" : "white"}
         border="1px solid"
-        borderColor="gaming.border"
+        borderColor={isDark ? "gaming.border" : "light.border"}
         borderRadius="xl"
         overflow="hidden"
         transition="all 0.3s ease"
+        boxShadow={isDark ? "none" : "sm"}
         _hover={{
-          borderColor: "gaming.accent",
+          borderColor: isDark ? "gaming.accent" : "light.accent",
           transform: "translateY(-4px)",
-          boxShadow: "0 12px 40px rgba(99, 102, 241, 0.25)",
+          boxShadow: isDark
+            ? "0 12px 40px rgba(99, 102, 241, 0.25)"
+            : "0 12px 40px rgba(99, 102, 241, 0.15)",
           cursor: "pointer",
         }}
         h="100%"
@@ -71,7 +78,11 @@ const GameCard = ({ game }: Props) => {
             left={0}
             right={0}
             h="80px"
-            bgGradient="linear(to-t, gaming.card, transparent)"
+            bgGradient={
+              isDark
+                ? "linear(to-t, gaming.card, transparent)"
+                : "linear(to-t, white, transparent)"
+            }
           />
 
           {/* Rating Badge */}
@@ -80,7 +91,7 @@ const GameCard = ({ game }: Props) => {
               position="absolute"
               top={3}
               left={3}
-              bg="blackAlpha.700"
+              bg={isDark ? "blackAlpha.700" : "whiteAlpha.900"}
               backdropFilter="blur(8px)"
               px={2}
               py={1}
@@ -88,7 +99,11 @@ const GameCard = ({ game }: Props) => {
               spacing={1}
             >
               <Icon as={BsStarFill} color="neon.yellow" boxSize={3} />
-              <Text fontSize="xs" fontWeight="bold" color="white">
+              <Text
+                fontSize="xs"
+                fontWeight="bold"
+                color={isDark ? "white" : "gray.800"}
+              >
                 {game.rating.toFixed(1)}
               </Text>
             </HStack>
@@ -119,8 +134,9 @@ const GameCard = ({ game }: Props) => {
               fontWeight="600"
               lineHeight="1.3"
               noOfLines={2}
+              color={isDark ? "white" : "gray.800"}
               transition="color 0.2s"
-              _groupHover={{ color: "neon.cyan" }}
+              _groupHover={{ color: isDark ? "neon.cyan" : "brand.500" }}
             >
               {game.name}
             </Heading>
@@ -131,8 +147,8 @@ const GameCard = ({ game }: Props) => {
                 {game.genres.slice(0, 3).map((genre) => (
                   <Badge
                     key={genre.id}
-                    bg="whiteAlpha.100"
-                    color="gray.400"
+                    bg={isDark ? "whiteAlpha.100" : "blackAlpha.100"}
+                    color={isDark ? "gray.400" : "gray.600"}
                     fontSize="2xs"
                     px={2}
                     py={0.5}
@@ -146,7 +162,11 @@ const GameCard = ({ game }: Props) => {
             )}
 
             {/* Meta Info */}
-            <HStack spacing={4} fontSize="xs" color="gray.500">
+            <HStack
+              spacing={4}
+              fontSize="xs"
+              color={isDark ? "gray.500" : "gray.600"}
+            >
               {game.released && (
                 <HStack spacing={1}>
                   <Icon as={BsCalendar3} boxSize={3} />

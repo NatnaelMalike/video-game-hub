@@ -37,12 +37,12 @@ const theme = extendTheme({
       900: "#00111a",
     },
     neon: {
-      cyan: "#00f5ff",
-      purple: "#bf00ff",
-      pink: "#ff00aa",
-      green: "#00ff88",
-      orange: "#ff6b00",
-      yellow: "#ffea00",
+      cyan: "#00d4ff",
+      purple: "#a855f7",
+      pink: "#ec4899",
+      green: "#10b981",
+      orange: "#f97316",
+      yellow: "#fbbf24",
     },
     gaming: {
       dark: "#0a0a0f",
@@ -53,35 +53,49 @@ const theme = extendTheme({
       accent: "#6366f1",
       accentHover: "#818cf8",
     },
+    light: {
+      bg: "#f8fafc",
+      card: "#ffffff",
+      cardHover: "#f1f5f9",
+      border: "#e2e8f0",
+      accent: "#6366f1",
+      accentHover: "#4f46e5",
+    },
   },
   styles: {
-    global: {
+    global: (props: any) => ({
       body: {
-        bg: "gaming.dark",
-        color: "gray.100",
+        bg: props.colorMode === "dark" ? "gaming.dark" : "light.bg",
+        color: props.colorMode === "dark" ? "gray.100" : "gray.800",
       },
       "*::selection": {
-        bg: "neon.cyan",
-        color: "gaming.dark",
+        bg: props.colorMode === "dark" ? "neon.cyan" : "brand.200",
+        color: props.colorMode === "dark" ? "gaming.dark" : "gray.900",
       },
-    },
+    }),
   },
   components: {
     Card: {
-      baseStyle: {
+      baseStyle: (props: any) => ({
         container: {
-          bg: "gaming.card",
+          bg: props.colorMode === "dark" ? "gaming.card" : "light.card",
           borderRadius: "xl",
           border: "1px solid",
-          borderColor: "gaming.border",
+          borderColor:
+            props.colorMode === "dark" ? "gaming.border" : "light.border",
           overflow: "hidden",
           transition: "all 0.3s ease",
+          boxShadow: props.colorMode === "dark" ? "none" : "sm",
           _hover: {
-            borderColor: "gaming.accent",
-            boxShadow: "0 0 20px rgba(99, 102, 241, 0.3)",
+            borderColor:
+              props.colorMode === "dark" ? "gaming.accent" : "light.accent",
+            boxShadow:
+              props.colorMode === "dark"
+                ? "0 0 20px rgba(99, 102, 241, 0.3)"
+                : "0 8px 30px rgba(99, 102, 241, 0.15)",
           },
         },
-      },
+      }),
     },
     Button: {
       baseStyle: {
@@ -90,72 +104,90 @@ const theme = extendTheme({
         transition: "all 0.2s ease",
       },
       variants: {
-        solid: {
-          bg: "gaming.accent",
+        solid: (props: any) => ({
+          bg: props.colorMode === "dark" ? "gaming.accent" : "light.accent",
           color: "white",
           _hover: {
-            bg: "gaming.accentHover",
+            bg:
+              props.colorMode === "dark"
+                ? "gaming.accentHover"
+                : "light.accentHover",
             transform: "translateY(-2px)",
             boxShadow: "0 4px 15px rgba(99, 102, 241, 0.4)",
           },
-        },
-        ghost: {
+        }),
+        ghost: (props: any) => ({
           _hover: {
-            bg: "whiteAlpha.100",
+            bg: props.colorMode === "dark" ? "whiteAlpha.100" : "blackAlpha.50",
           },
-        },
-        gaming: {
+        }),
+        gaming: (props: any) => ({
           bg: "transparent",
           border: "1px solid",
-          borderColor: "gaming.accent",
-          color: "gaming.accent",
+          borderColor:
+            props.colorMode === "dark" ? "gaming.accent" : "light.accent",
+          color: props.colorMode === "dark" ? "gaming.accent" : "light.accent",
           _hover: {
-            bg: "gaming.accent",
+            bg: props.colorMode === "dark" ? "gaming.accent" : "light.accent",
             color: "white",
             boxShadow: "0 0 15px rgba(99, 102, 241, 0.5)",
           },
-        },
+        }),
       },
     },
     Menu: {
-      baseStyle: {
+      baseStyle: (props: any) => ({
         list: {
-          bg: "gaming.card",
+          bg: props.colorMode === "dark" ? "gaming.card" : "white",
           border: "1px solid",
-          borderColor: "gaming.border",
+          borderColor:
+            props.colorMode === "dark" ? "gaming.border" : "light.border",
           borderRadius: "xl",
-          boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5)",
+          boxShadow:
+            props.colorMode === "dark"
+              ? "0 10px 40px rgba(0, 0, 0, 0.5)"
+              : "0 10px 40px rgba(0, 0, 0, 0.1)",
           py: 2,
         },
         item: {
           bg: "transparent",
           _hover: {
-            bg: "whiteAlpha.100",
+            bg: props.colorMode === "dark" ? "whiteAlpha.100" : "blackAlpha.50",
           },
           _focus: {
-            bg: "whiteAlpha.100",
+            bg: props.colorMode === "dark" ? "whiteAlpha.100" : "blackAlpha.50",
           },
         },
-      },
+      }),
     },
     Input: {
       variants: {
-        filled: {
+        filled: (props: any) => ({
           field: {
-            bg: "gaming.card",
+            bg: props.colorMode === "dark" ? "gaming.card" : "white",
             border: "1px solid",
-            borderColor: "gaming.border",
+            borderColor:
+              props.colorMode === "dark" ? "gaming.border" : "light.border",
+            color: props.colorMode === "dark" ? "white" : "gray.800",
             _hover: {
-              bg: "gaming.cardHover",
-              borderColor: "gaming.accent",
+              bg:
+                props.colorMode === "dark"
+                  ? "gaming.cardHover"
+                  : "light.cardHover",
+              borderColor:
+                props.colorMode === "dark" ? "gaming.accent" : "light.accent",
             },
             _focus: {
-              bg: "gaming.cardHover",
-              borderColor: "neon.cyan",
-              boxShadow: "0 0 10px rgba(0, 245, 255, 0.2)",
+              bg: props.colorMode === "dark" ? "gaming.cardHover" : "white",
+              borderColor:
+                props.colorMode === "dark" ? "neon.cyan" : "light.accent",
+              boxShadow:
+                props.colorMode === "dark"
+                  ? "0 0 10px rgba(0, 245, 255, 0.2)"
+                  : "0 0 10px rgba(99, 102, 241, 0.2)",
             },
           },
-        },
+        }),
       },
     },
     Badge: {
@@ -177,8 +209,32 @@ const theme = extendTheme({
         borderRadius: "lg",
       },
       defaultProps: {
-        startColor: "gaming.card",
-        endColor: "gaming.border",
+        startColor: "gray.100",
+        endColor: "gray.200",
+      },
+    },
+  },
+  semanticTokens: {
+    colors: {
+      "card-bg": {
+        default: "white",
+        _dark: "gaming.card",
+      },
+      "card-border": {
+        default: "light.border",
+        _dark: "gaming.border",
+      },
+      "text-primary": {
+        default: "gray.800",
+        _dark: "gray.100",
+      },
+      "text-secondary": {
+        default: "gray.600",
+        _dark: "gray.400",
+      },
+      "text-muted": {
+        default: "gray.500",
+        _dark: "gray.500",
       },
     },
   },

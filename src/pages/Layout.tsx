@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Box } from "@chakra-ui/react";
+import { Box, useColorMode } from "@chakra-ui/react";
 
 const Layout = () => {
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
+
   return (
     <Box
       minH="100vh"
-      bg="gaming.dark"
+      bg={isDark ? "gaming.dark" : "light.bg"}
       position="relative"
       _before={{
         content: '""',
@@ -16,8 +19,9 @@ const Layout = () => {
         left: 0,
         right: 0,
         height: "400px",
-        background:
-          "linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, transparent 100%)",
+        background: isDark
+          ? "linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, transparent 100%)"
+          : "linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, transparent 100%)",
         pointerEvents: "none",
       }}
     >

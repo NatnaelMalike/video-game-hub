@@ -1,20 +1,24 @@
-import { Box, HStack, Image, Text, Flex } from "@chakra-ui/react";
+import { Box, HStack, Image, Text, Flex, useColorMode } from "@chakra-ui/react";
 import logo from "../assets/logo.webp";
 import DarkModeSwitch from "./DarkModeSwitch";
 import SearchInput from "./SearchInput";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
+
   return (
     <Box
       as="nav"
       position="sticky"
       top={0}
       zIndex={100}
-      bg="rgba(10, 10, 15, 0.85)"
+      bg={isDark ? "rgba(10, 10, 15, 0.85)" : "rgba(255, 255, 255, 0.85)"}
       backdropFilter="blur(12px)"
       borderBottom="1px solid"
-      borderColor="gaming.border"
+      borderColor={isDark ? "gaming.border" : "light.border"}
+      boxShadow={isDark ? "none" : "sm"}
     >
       <Flex
         maxW="1800px"
@@ -42,7 +46,11 @@ const Navbar = () => {
               fontSize="xl"
               fontFamily="heading"
               fontWeight="bold"
-              bgGradient="linear(to-r, neon.cyan, gaming.accent)"
+              bgGradient={
+                isDark
+                  ? "linear(to-r, neon.cyan, gaming.accent)"
+                  : "linear(to-r, brand.500, light.accent)"
+              }
               bgClip="text"
               letterSpacing="wider"
             >
